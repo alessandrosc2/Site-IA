@@ -946,6 +946,9 @@ footer a:hover{color:var(--cyan)}
         </ul>
       </div>
     </div>
+        <div style="text-align: center; margin-bottom: 24px;">
+      <img src="img/mercado-pago.png" alt="Ambiente Seguro Mercado Pago" style="max-width: 100%; height: auto; max-height: 50px; object-fit: contain;">
+    </div>
     <div class="foot-base">
       <span>© <span id="ano">2026</span> Site-IA. Todos os direitos reservados.</span>
       <span>Este produto não garante resultados financeiros. Resultados variam conforme aplicação.</span>
@@ -1031,17 +1034,168 @@ footer a:hover{color:var(--cyan)}
       (restantes / VAGAS.total * 100).toFixed(1) + '%';
   }
 
-  /* TODO: aponte os botões de compra para o seu checkout real.
-     Basta definir o link abaixo — todos os [data-checkout] passam a usá-lo. */
-  var CHECKOUT = ""; /* ex.: "https://pay.hotmart.com/SEU-CODIGO" */
-  if (CHECKOUT){
-    document.querySelectorAll('[data-checkout]').forEach(function(a){
-      a.setAttribute('href', CHECKOUT);
-      a.setAttribute('target','_blank');
-      a.setAttribute('rel','noopener');
-    });
+  })();
+</script>
+<!-- CSS DO CHECKOUT MODAL -->
+<style>
+  .checkout-modal-overlay {
+    position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+    background: rgba(0, 0, 0, 0.85); backdrop-filter: blur(4px);
+    display: none; justify-content: center; align-items: center; z-index: 9999;
+    padding: 20px; box-sizing: border-box;
   }
-})();
+  .checkout-modal-overlay.active { display: flex; }
+  .checkout-modal-content {
+    background: #0F172A; width: 100%; max-width: 440px; padding: 32px 24px;
+    border-radius: 16px; border: 1px solid #1E293B; color: #fff;
+    position: relative; text-align: left;
+    font-family: inherit;
+  }
+  .checkout-modal-close {
+    position: absolute; top: 16px; right: 20px; font-size: 24px;
+    color: #64748B; cursor: pointer; text-decoration: none;
+  }
+  .checkout-modal-close:hover { color: #fff; }
+  .checkout-title { font-size: 20px; font-weight: 700; margin: 0 0 8px 0; color: #F8FAFC; }
+  .checkout-subtitle { font-size: 14px; color: #94A3B8; margin-bottom: 24px; }
+  .checkout-input-group { margin-bottom: 16px; }
+  .checkout-input-group label { display: block; font-size: 13px; margin-bottom: 6px; color: #CBD5E1; font-weight: 500;}
+  .checkout-input-group input {
+    width: 100%; padding: 12px 16px; border-radius: 8px; border: 1px solid #334155;
+    background: #1E293B; color: #F8FAFC; font-size: 15px; box-sizing: border-box;
+  }
+  .checkout-input-group input:focus { border-color: #38BDF8; outline: none; }
+  .checkout-submit-btn {
+    width: 100%; padding: 14px; background: #38BDF8; color: #000;
+    border: none; border-radius: 8px; font-size: 16px; font-weight: 700;
+    cursor: pointer; margin-top: 8px; transition: background 0.2s;
+  }
+  .checkout-submit-btn:hover { background: #0EA5E9; }
+  .checkout-submit-btn:disabled { background: #475569; color: #94A3B8; cursor: not-allowed; }
+  .checkout-secure { display: flex; align-items: center; justify-content: center; gap: 8px; font-size: 12px; color: #94A3B8; margin-top: 16px; }
+</style>
+
+<!-- MODAL CHECKOUT -->
+<div class="checkout-modal-overlay" id="checkoutModal">
+  <div class="checkout-modal-content">
+    <a href="javascript:void(0)" class="checkout-modal-close" id="closeCheckout">&times;</a>
+    <h3 class="checkout-title">Finalizar Inscrição</h3>
+    <p class="checkout-subtitle">Preencha seus dados para acessar o Site-IA.</p>
+    
+    <form id="checkoutForm">
+      <div class="checkout-input-group">
+        <label>Seu Nome Completo</label>
+        <input type="text" id="chkName" required placeholder="Digite seu nome">
+      </div>
+      <div class="checkout-input-group">
+        <label>Seu E-mail</label>
+        <input type="email" id="chkEmail" required placeholder="E-mail para receber o acesso">
+      </div>
+      <div class="checkout-input-group">
+        <label>Seu WhatsApp</label>
+        <input type="tel" id="chkPhone" required placeholder="(11) 99999-9999">
+      </div>
+      <button type="submit" class="checkout-submit-btn" id="chkSubmitBtn">Ir para Pagamento Seguro</button>
+      <div class="checkout-secure">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        Ambiente 100% seguro via Mercado Pago
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- FIREBASE & CHECKOUT SCRIPT -->
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-app.js";
+  import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-firestore.js";
+
+  // IMPORTANTE: Preencha aqui a mesma firebaseConfig do seu projeto Vercel para capturar Leads.
+  // Se estiver em branco, o pagamento funciona normalmente sem salvar no Firebase.
+  const firebaseConfig = {
+    apiKey: "", // Opcional (Recomendado preencher com a mesma chave do repositório Seu-Site)
+    authDomain: "",
+    projectId: "",
+    storageBucket: "",
+    messagingSenderId: "",
+    appId: ""
+  };
+
+  let db = null;
+  try {
+    if(firebaseConfig.apiKey) {
+      const app = initializeApp(firebaseConfig);
+      db = getFirestore(app);
+    }
+  } catch(e) {
+    console.error("Firebase init bypass:", e);
+  }
+
+  const modal = document.getElementById('checkoutModal');
+  const closeBtn = document.getElementById('closeCheckout');
+  const form = document.getElementById('checkoutForm');
+  const submitBtn = document.getElementById('chkSubmitBtn');
+
+  // Abre Modal
+  document.querySelectorAll('[data-checkout]').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.preventDefault();
+      modal.classList.add('active');
+    });
+  });
+
+  // Fecha Modal
+  closeBtn.addEventListener('click', () => modal.classList.remove('active'));
+  modal.addEventListener('click', (e) => { if(e.target === modal) modal.classList.remove('active'); });
+
+  // Processa Formulário
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const name = document.getElementById('chkName').value;
+    const email = document.getElementById('chkEmail').value;
+    const phone = document.getElementById('chkPhone').value;
+
+    submitBtn.disabled = true;
+    submitBtn.textContent = "Processando...";
+
+    // 1. Salvar Lead no Firebase (se configurado)
+    if(db) {
+      try {
+        await addDoc(collection(db, "leads_vsl"), {
+          name, email, phone, planKey: 'site-ia-vsl',
+          status: 'checkout_initiated', createdAt: serverTimestamp(),
+          source: window.location.href
+        });
+      } catch(err) {
+        console.error("Erro ao salvar lead:", err);
+      }
+    }
+
+    // 2. Chamar Netlify Function para gerar a preferência do Mercado Pago
+    try {
+      const response = await fetch('/.netlify/functions/create-preference', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name, email, planKey: 'site-ia-vsl' })
+      });
+      
+      const data = await response.json();
+      
+      if(data.init_point) {
+        window.location.href = data.init_point; // Redireciona para o checkout oficial do Mercado Pago
+      } else {
+        throw new Error("init_point não retornado");
+      }
+    } catch(err) {
+      console.error(err);
+      alert("Erro ao conectar com servidor de pagamentos. Tente novamente.");
+      submitBtn.disabled = false;
+      submitBtn.textContent = "Ir para Pagamento Seguro";
+    }
+  });
 </script>
 </body>
 </html>
+
+
+
+
