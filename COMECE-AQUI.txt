@@ -1,0 +1,88 @@
+=========================================================================
+  SITE-IA — LANDING PAGE
+  Guia rápido (3 minutos)
+=========================================================================
+
+  1) COLOCAR O SEU VÍDEO
+  -----------------------------------------------------------------------
+     Abra a pasta "vsl" e coloque o arquivo do vídeo lá dentro com o
+     nome exato:
+
+             minha-vsl.mp4
+
+     Ou seja:  vsl/minha-vsl.mp4
+
+     Já está tudo conectado no HTML. Não precisa mexer em código.
+     (Instruções detalhadas estão no vsl/LEIA-ME.txt)
+
+
+  2) COLOCAR O SEU LINK DE PAGAMENTO
+  -----------------------------------------------------------------------
+     Abra o arquivo "index.html" com um editor de texto simples
+     (Bloco de Notas, TextEdit ou VS Code).
+
+     Aperte Ctrl+F (Cmd+F no Mac) e procure por:
+
+             var CHECKOUT = "";
+
+     Preencha com o seu link, entre as aspas. Exemplo:
+
+             var CHECKOUT = "https://pay.hotmart.com/SEU-CODIGO";
+
+     Salve. Pronto: os 5 botões de compra da página passam a apontar
+     para o seu checkout automaticamente.
+
+     Se você usa a versão index-leve.html, faça o mesmo nela.
+
+
+  3) PUBLICAR  (escolha uma opção)
+  -----------------------------------------------------------------------
+     OPÇÃO A — Netlify (mais fácil, grátis)
+       - Entre em app.netlify.com e faça login
+       - Vá em "Sites" e arraste a PASTA INTEIRA do projeto para a área
+         de upload
+       - O site fica no ar em segundos, com endereço próprio
+       - Para usar seu domínio: "Domain settings" > "Add custom domain"
+
+     OPÇÃO B — Vercel (grátis)
+       - vercel.com > "Add New" > "Project" > arraste a pasta
+
+     OPÇÃO C — Sua hospedagem atual (Hostinger, HostGator, etc.)
+       - Abra o Gerenciador de Arquivos (ou use FTP)
+       - Envie TODO o conteúdo da pasta para a pasta pública
+         (normalmente chamada "public_html", "www" ou "htdocs")
+       - O arquivo index.html precisa ficar na raiz dessa pasta
+
+     IMPORTANTE: publique a pasta inteira, não só o index.html —
+     as imagens ficam em "mockups/" e o vídeo em "vsl/".
+
+
+  QUAL ARQUIVO PUBLICAR?
+  -----------------------------------------------------------------------
+     index.html        →  já tem tudo embutido (imagens e capa dentro do
+                          próprio arquivo). Funciona até offline.
+                          Use este se quiser a instalação mais simples.
+
+     index-leve.html   →  carrega um pouco mais rápido, porque as imagens
+                          ficam em arquivo separado. Se usar esta, renomeie
+                          para "index.html" na hora de publicar (é o nome
+                          que os navegadores procuram por padrão).
+
+
+  DÚVIDAS COMUNS
+  -----------------------------------------------------------------------
+     "Apareceu uma faixa amarela no lugar do vídeo"
+        O arquivo do vídeo não está na pasta vsl com o nome certo,
+        ou está em outro formato (.mov, .mkv). Converta para .mp4.
+
+     "O vídeo demora para começar"
+        O arquivo está pesado. Comprima para menos de 100 MB ou use
+        YouTube/Vimeo (instruções no vsl/LEIA-ME.txt).
+
+     "Quero trocar as imagens da galeria"
+        Substitua os arquivos dentro da pasta "mockups" mantendo os
+        mesmos nomes (ex.: nexo-crm.webp).
+
+     "Quero trocar as cores"
+        No index.html, procure por ":root" no começo do arquivo.
+        A cor principal é a variável --cyan.

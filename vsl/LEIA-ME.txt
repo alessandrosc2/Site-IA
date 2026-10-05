@@ -1,0 +1,61 @@
+=========================================================================
+  AQUI VAI O SEU VÍDEO (VSL)
+=========================================================================
+
+  Coloque nesta pasta o arquivo do vídeo com EXATAMENTE este nome:
+
+        minha-vsl.mp4
+
+  Ou seja, o caminho final tem que ficar assim:
+
+        vsl/minha-vsl.mp4
+
+  Pronto. Não precisa editar nada no HTML — o player já está apontando
+  para este arquivo. É só colocar o vídeo aqui e recarregar a página.
+
+
+-------------------------------------------------------------------------
+  RECOMENDAÇÕES TÉCNICAS
+-------------------------------------------------------------------------
+
+  Formato : MP4 (vídeo H.264 + áudio AAC) — compatível com todos os
+            navegadores e celulares. Se o seu arquivo for .mov ou .mkv,
+            converta antes (HandBrake, CapCut, ou "Exportar como MP4").
+
+  Tamanho : ideal até 100 MB. Acima de 300 MB o vídeo demora para
+            começar em conexão 4G e derruba a conversão da página.
+
+  Resolução: 1920x1080 ou 1280x720 (16:9). O player também aceita
+            formato vertical, mas ele aparece com faixas nas laterais.
+
+  Se o vídeo for longo (mais de ~10 minutos), vale mais a pena subir no
+  YouTube/Vimeo (pode ser "não listado") e usar o embed — carrega bem
+  mais rápido. Nesse caso, abra o index.html, procure o comentário
+  "== VSL ==" e siga a instrução que está lá dentro.
+
+
+-------------------------------------------------------------------------
+  O QUE MAIS TEM NESTA PASTA
+-------------------------------------------------------------------------
+
+  minha-vsl-poster.webp
+      A capa que aparece no player antes do clique. Já está com a
+      identidade do Site-IA. Você não precisa mexer nela.
+
+      Se quiser trocar a capa, faça o seguinte: grave um print de um
+      trecho do seu vídeo, salve como minha-vsl-poster.webp (1280x720)
+      aqui nesta pasta, substituindo este arquivo.
+
+
+-------------------------------------------------------------------------
+  COMO TESTAR
+-------------------------------------------------------------------------
+
+  1. Coloque o minha-vsl.mp4 aqui nesta pasta
+  2. Abra o index.html (dê dois cliques nele)
+  3. Role até a seção "Não vou pedir que você acredite."
+  4. Clique no botão de play — o vídeo deve começar a tocar
+
+  Se aparecer uma faixa amarela dizendo "Vídeo ainda não adicionado",
+  é sinal de que o nome do arquivo não está exatamente igual. Confira:
+  letras minúsculas, com hífen, e a extensão .mp4 no final.
