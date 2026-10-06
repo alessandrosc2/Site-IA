@@ -1092,7 +1092,7 @@ footer a:hover{color:var(--cyan)}
   }
   .checkout-modal-overlay.active { display: flex; }
   .checkout-modal-content {
-    background: #0F172A; width: 100%; max-width: 440px; padding: 32px 24px;
+    background: #0F172A; width: 100%; max-width: 440px; padding: 32px 24px; max-height: 90vh; overflow-y: auto;
     border-radius: 16px; border: 1px solid #1E293B; color: #fff;
     position: relative; text-align: left;
     font-family: inherit;
@@ -1189,7 +1189,7 @@ footer a:hover{color:var(--cyan)}
 
   // Fecha Modal
   closeBtn.addEventListener('click', () => modal.classList.remove('active'));
-  modal.addEventListener('click', (e) => { if(e.target === modal) modal.classList.remove('active'); });
+  // backdrop click removed
 
   // Processa Formulário
   form.addEventListener('submit', async (e) => {
@@ -1239,6 +1239,7 @@ footer a:hover{color:var(--cyan)}
 </script>
 </body>
 </html>
+
 
 
 

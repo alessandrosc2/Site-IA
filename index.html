@@ -80,12 +80,12 @@ section{position:relative}
 
 /* ---------- botões ---------- */
 .btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;
-  font-family:var(--display);font-weight:700;font-size:15.5px;letter-spacing:.01em;
-  padding:17px 30px;border-radius:999px;border:1px solid transparent;cursor:pointer;
-  transition:transform .18s cubic-bezier(.16,1,.3,1),box-shadow .18s,background .18s;
-  text-align:center;min-height:52px}
+    font-family:var(--display);font-weight:700;font-size:15.5px;letter-spacing:.01em;
+    padding:17px 30px;border-radius:999px;border:1px solid transparent;cursor:pointer;
+    transition:transform .18s cubic-bezier(.16,1,.3,1),box-shadow .18s,background .18s;
+    text-align:center;min-height:52px;line-height:1.3}
 .btn-primario{background:linear-gradient(96deg,var(--cyan),#42e0ee 55%,#00e599);color:#04101f;
-  box-shadow:0 0 0 1px rgba(0,212,232,.35),0 18px 44px -18px rgba(0,212,232,.75)}
+    box-shadow:0 0 0 1px rgba(0,212,232,.35),0 18px 44px -18px rgba(0,212,232,.75)}
 .btn-primario:hover{transform:translateY(-2px);box-shadow:0 0 0 1px rgba(0,212,232,.5),0 24px 54px -16px rgba(0,212,232,.9)}
 .btn-fantasma{background:rgba(255,255,255,.03);border-color:var(--border);color:var(--text)}
 .btn-fantasma:hover{background:rgba(255,255,255,.07);transform:translateY(-2px)}
@@ -93,6 +93,10 @@ section{position:relative}
 .btn-claro:hover{transform:translateY(-2px)}
 .btn-lg{padding:20px 40px;font-size:17px;min-height:60px}
 .btn-bloco{display:flex;width:100%}
+@media(max-width:480px){
+  .btn{padding:14px 24px;font-size:14.5px;min-height:48px}
+  .btn-lg{padding:16px 24px;font-size:15px;min-height:54px;border-radius:24px}
+}
 :focus-visible{outline:2.5px solid var(--cyan);outline-offset:3px;border-radius:6px}
 
 /* ---------- barra de progresso + nav ---------- */
@@ -1039,18 +1043,22 @@ footer a:hover{color:var(--cyan)}
 <!-- CSS DO CHECKOUT MODAL -->
 <style>
   .checkout-modal-overlay {
-    position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
-    background: rgba(0, 0, 0, 0.85); backdrop-filter: blur(4px);
-    display: none; justify-content: center; align-items: center; z-index: 9999;
-    padding: 20px; box-sizing: border-box;
-  }
-  .checkout-modal-overlay.active { display: flex; }
-  .checkout-modal-content {
-    background: #0F172A; width: 100%; max-width: 440px; padding: 32px 24px;
-    border-radius: 16px; border: 1px solid #1E293B; color: #fff;
-    position: relative; text-align: left;
-    font-family: inherit;
-  }
+      position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+      background: rgba(0, 0, 0, 0.85); backdrop-filter: blur(4px);
+      display: none; justify-content: center; align-items: flex-start; z-index: 9999;
+      padding: 0; box-sizing: border-box; overflow-y: auto; overflow-x: hidden;
+    }
+    .checkout-modal-overlay.active { display: flex; }
+    .checkout-modal-content {
+      background: #0F172A; width: 100%; max-width: 440px; padding: 32px 24px; min-height: 100vh;
+      border-radius: 0; border: none; color: #fff;
+      position: relative; text-align: left; font-family: inherit; margin: 0 auto;
+      display: flex; flex-direction: column;
+    }
+    @media (min-width: 640px) {
+      .checkout-modal-overlay { padding: 40px 20px; align-items: center; }
+      .checkout-modal-content { min-height: auto; border-radius: 16px; border: 1px solid #1E293B; }
+    }
   .checkout-modal-close {
     position: absolute; top: 16px; right: 20px; font-size: 24px;
     color: #64748B; cursor: pointer; text-decoration: none;
@@ -1145,7 +1153,7 @@ footer a:hover{color:var(--cyan)}
 
   // Fecha Modal
   closeBtn.addEventListener('click', () => modal.classList.remove('active'));
-  modal.addEventListener('click', (e) => { if(e.target === modal) modal.classList.remove('active'); });
+  // backdrop click removed
 
   // Processa Formulário
   form.addEventListener('submit', async (e) => {
@@ -1195,6 +1203,7 @@ footer a:hover{color:var(--cyan)}
 </script>
 </body>
 </html>
+
 
 
 
