@@ -31,6 +31,7 @@ exports.handler = async (event, context) => {
         pending: "https://seusite-ia.netlify.app/"
       },
       auto_return: "approved",
+      notification_url: "https://seusite-unico.vercel.app/api/webhook",
     };
 
     const response = await mercadopago.preferences.create(preference);
@@ -51,3 +52,4 @@ exports.handler = async (event, context) => {
     };
   }
 };
+
