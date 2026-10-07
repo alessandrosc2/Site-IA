@@ -26,7 +26,7 @@ exports.handler = async (event, context) => {
         email: email,
       },
       back_urls: {
-        success: "https://seusite-unico.vercel.app/dashboard",
+        success: "https://seusite-unico.vercel.app/success",
         failure: "https://seusite-ia.netlify.app/",
         pending: "https://seusite-ia.netlify.app/"
       },
@@ -52,4 +52,5 @@ exports.handler = async (event, context) => {
     };
   }
 };
+
 
