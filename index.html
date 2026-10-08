@@ -1175,7 +1175,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         <label>Seu WhatsApp</label>
         <input type="tel" id="chkPhone" required placeholder="(11) 99999-9999">
       </div>
-      <button type="submit" class="checkout-submit-btn" id="chkSubmitBtn">Ir para Pagamento Seguro</button>
+      <button type="submit" class="checkout-submit-btn" id="chkSubmitBtn" onclick="fbq('track', 'InitiateCheckout', {value: 47.90, currency: 'BRL'});">Ir para Pagamento Seguro</button>
       <div class="checkout-secure">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
         Ambiente 100% seguro via Mercado Pago
@@ -1275,6 +1275,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 </script>
 </body>
 </html>
+
 
 
 
